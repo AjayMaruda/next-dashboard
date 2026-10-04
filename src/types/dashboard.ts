@@ -1,10 +1,16 @@
 export type Trend = "up" | "down" | "neutral";
-export type TransactionStatus = "completed" | "pending" | "failed" | "cancelled";
+export type TransactionStatus =
+  | "completed"
+  | "pending"
+  | "failed"
+  | "cancelled";
 export type Period = "7d" | "30d" | "90d" | "1y";
+export type SortField = "customer" | "amount" | "date";
+export type SortDir = "asc" | "desc";
 
 export interface StatMetric {
   value: number;
-  change: number; // percentage change vs previous period
+  change: number;
   trend: Trend;
 }
 
@@ -24,7 +30,7 @@ export interface RevenueDataPoint {
 
 export interface TrafficSource {
   source: string;
-  value: number; // percentage
+  value: number;
   color: string;
 }
 

@@ -1,36 +1,39 @@
 import { DashboardShell } from "@/components/layout/dashboard-shell";
+import { StatsGridSkeleton } from "@/components/dashboard/stats-grid";
 import { ExecutiveTickerSkeleton } from "@/components/dashboard/executive-ticker";
-import { CommandRevenueBoardSkeleton } from "@/components/dashboard/command-revenue-board";
-import { ConversionRadarSkeleton } from "@/components/dashboard/conversion-radar";
-import { ChannelMatrixSkeleton } from "@/components/dashboard/channel-matrix";
+import { RevenueChartSkeleton } from "@/components/dashboard/revenue-chart";
+import { TrafficChartSkeleton } from "@/components/dashboard/traffic-chart";
 import { ActivityTableSkeleton } from "@/components/dashboard/activity-table";
 import { CustomerActivityFeedSkeleton } from "@/components/dashboard/customer-activity-feed";
 
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <div className="mb-5 pb-3 border-b border-[var(--color-border)]">
-        <div className="h-7 w-64 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] animate-pulse" />
-        <div className="mt-2 h-4 w-96 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] animate-pulse" />
-      </div>
       <div className="flex flex-col gap-5">
-        <ExecutiveTickerSkeleton />
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-12">
-          <div className="xl:col-span-8">
-            <CommandRevenueBoardSkeleton />
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-[var(--color-border)] animate-pulse">
+          <div>
+            <div className="h-6 w-36 bg-[var(--color-surface-raised)]" />
+            <div className="mt-1 h-3 w-56 bg-[var(--color-surface-raised)]" />
           </div>
-          <div className="xl:col-span-4 flex flex-col gap-5">
-            <ConversionRadarSkeleton />
-            <ChannelMatrixSkeleton />
-          </div>
+          <div className="h-7 w-40 bg-[var(--color-surface-raised)]" />
         </div>
-        <div className="grid grid-cols-1 gap-5 xl:grid-cols-12">
-          <div className="xl:col-span-8">
-            <ActivityTableSkeleton />
+
+        <div className="flex flex-col gap-5">
+          <ExecutiveTickerSkeleton />
+          <StatsGridSkeleton />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+            <div className="lg:col-span-8 flex flex-col">
+              <RevenueChartSkeleton />
+            </div>
+            <div className="lg:col-span-4 flex flex-col">
+              <TrafficChartSkeleton />
+            </div>
           </div>
-          <div className="xl:col-span-4">
-            <CustomerActivityFeedSkeleton />
-          </div>
+
+          <CustomerActivityFeedSkeleton />
+
+          <ActivityTableSkeleton />
         </div>
       </div>
     </DashboardShell>

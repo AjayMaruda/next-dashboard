@@ -5,8 +5,6 @@ import type {
   Period,
 } from "@/types/dashboard";
 
-// ─── Revenue time series ────────────────────────────────────────────────────
-
 const generateRevenueSeries = (days: number): RevenueDataPoint[] => {
   const data: RevenueDataPoint[] = [];
   const now = new Date();
@@ -20,7 +18,6 @@ const generateRevenueSeries = (days: number): RevenueDataPoint[] => {
         ? date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
         : date.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
 
-    // Simulate a realistic revenue curve with some noise + upward trend
     const base = 8000 + (days - i) * 40;
     const noise = Math.sin(i * 0.7) * 1200 + Math.random() * 800;
     const revenue = Math.round(base + noise);
@@ -30,7 +27,6 @@ const generateRevenueSeries = (days: number): RevenueDataPoint[] => {
     data.push({ date: label, revenue, orders, users });
   }
 
-  // Deduplicate labels for 1Y (monthly grouping)
   if (days > 90) {
     const seen = new Set<string>();
     return data.filter((d) => {
@@ -49,8 +45,6 @@ const REVENUE_BY_PERIOD: Record<Period, RevenueDataPoint[]> = {
   "90d": generateRevenueSeries(90),
   "1y": generateRevenueSeries(365),
 };
-
-// ─── Activity / Transactions ────────────────────────────────────────────────
 
 const NAMES = [
   ["Liam Johnson", "liam@example.com"],
@@ -114,8 +108,6 @@ const ACTIVITY: ActivityItem[] = Array.from({ length: 40 }, (_, i) => {
   };
 });
 
-// ─── Full dashboard payload ─────────────────────────────────────────────────
-
 export const MOCK_DASHBOARD_DATA: DashboardData = {
   stats: {
     totalRevenue: { value: 248_500, change: 12.4, trend: "up" },
@@ -123,7 +115,7 @@ export const MOCK_DASHBOARD_DATA: DashboardData = {
     totalOrders: { value: 3_247, change: -2.3, trend: "down" },
     conversionRate: { value: 3.6, change: 0.4, trend: "up" },
   },
-  revenue: REVENUE_BY_PERIOD["30d"], // default period
+  revenue: REVENUE_BY_PERIOD["30d"],
   traffic: [
     { source: "Organic Search", value: 38, color: "#9b1c1c" },
     { source: "Direct",         value: 24, color: "#c2410c" },

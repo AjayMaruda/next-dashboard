@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/analytics", "destination": "/dashboard?tab=analytics" },
+    { "source": "/customers", "destination": "/dashboard?tab=customers" },
+    { "source": "/orders", "destination": "/dashboard?tab=orders" },
+    { "source": "/settings", "destination": "/dashboard?tab=settings" },
+    { "source": "/help", "destination": "/dashboard?tab=help" },
+    {
+      "source": "/((?!api/|_next/|_static/|[\\w-]+\\.\\w+).*)",
+      "destination": "/dashboard"
+    }
+  ]
+}

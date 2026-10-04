@@ -1,43 +1,40 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Primary: Red (Main Palette) ─────────────────────────── */
-  --color-accent: #9b1c1c;             /* Cardinal Red */
-  --color-accent-hover: #7f1d1d;       /* Darker Red */
-  --color-accent-subtle: #fef2f2;      /* Soft Red wash */
-  --color-accent-border: #b91c1c;      /* Crisp Red border */
-  
-  --color-sidebar-bg: #801414;         /* Rich Deep Carmine Red */
-  --color-sidebar-hover: #6a1010;      /* Deep burgundy hover */
-  --color-sidebar-active: #ffffff;     /* Sharp crisp white active badge */
-  --color-sidebar-border: #991e1e;     /* Tone-on-tone red border */
+  --color-accent: #a82020;
+  --color-accent-hover: #8e1818;
+  --color-accent-subtle: #fdf3f3;
+  --color-accent-border: #c43838;
 
-  /* ── Secondary: Beige (Canvas & Surfaces) ─────────────────── */
-  --color-background: #f7f4ee;         /* Warm linen beige */
-  --color-surface: #ffffff;             /* Off-white / crisp card face */
-  --color-surface-raised: #efe9df;     /* Sand beige for inputs & headers */
-  --color-surface-subtle: #fbf9f5;     /* Soft ivory */
-  --color-border: #d8cdbf;             /* Architectural tan border */
-  --color-border-subtle: #e8ded1;      /* Light beige divider */
+  --color-sidebar-bg: #741616;
+  --color-sidebar-hover: #601010;
+  --color-sidebar-active: #ffffff;
+  --color-sidebar-border: #8b1e1e;
 
-  /* ── Text: Crisp Black & Charcoal ─────────────────────────── */
-  --color-text-primary: #0a0a0a;       /* Stark Black */
-  --color-text-secondary: #3f3a36;     /* Deep Charcoal */
-  --color-text-muted: #84796d;          /* Warm Slate Muted */
+  --color-background: #f8f6f2;
+  --color-surface: #ffffff;
+  --color-surface-raised: #f3ede4;
+  --color-surface-subtle: #faf8f5;
+  --color-border: #e3dbd0;
+  --color-border-subtle: #ece5dc;
 
-  /* ── Semantic Indicators ──────────────────────────────────── */
-  --color-positive: #15803d;           /* Crisp Emerald */
-  --color-negative: #9b1c1c;           /* Primary Red for down trends */
+  --color-text-primary: #121110;
+  --color-text-secondary: #4a443e;
+  --color-text-muted: #8c8276;
 
-  /* ── Geometry: Zero roundedness (Sharp Edges) ─────────────── */
+  --color-positive: #15803d;
+  --color-negative: #a82020;
+
   --radius: 0px;
   --radius-lg: 0px;
 }
 
 @layer base {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     box-sizing: border-box;
-    border-radius: 0px !important; /* Enforce crisp sharp edges everywhere */
+    border-radius: 0px !important;
   }
 
   html {
@@ -53,16 +50,21 @@
     line-height: 1.5;
   }
 
-  /* Sharp custom scrollbar */
-  ::-webkit-scrollbar { width: 6px; height: 6px; }
-  ::-webkit-scrollbar-track { background: var(--color-surface-raised); }
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface-raised);
+  }
   ::-webkit-scrollbar-thumb {
     background: var(--color-border);
     border-radius: 0px;
   }
-  ::-webkit-scrollbar-thumb:hover { background: var(--color-accent); }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
 
-  /* Sharp focus ring */
   *:focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 1px;
@@ -71,56 +73,74 @@
 }
 
 @layer utilities {
-  /* Sharp Card with Crisp Hard Drop Shadow */
   .card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: 0px;
-    box-shadow: 3px 3px 0px 0px rgba(45, 30, 20, 0.09);
+    box-shadow: 2px 2px 0px 0px rgba(35, 25, 15, 0.05);
   }
 
   .card-hover {
-    transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease,
+      border-color 120ms ease;
   }
   .card-hover:hover {
     border-color: var(--color-accent);
-    box-shadow: 4px 4px 0px 0px rgba(155, 28, 28, 0.25);
+    box-shadow: 3px 3px 0px 0px rgba(168, 32, 32, 0.18);
     transform: translate(-1px, -1px);
   }
 
-  /* Sharp buttons with distinct offset shadows */
   .btn-sharp {
     border-radius: 0px;
-    transition: transform 120ms ease, box-shadow 120ms ease;
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.85);
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+    box-shadow: 2px 2px 0px 0px rgba(18, 17, 16, 0.9);
   }
   .btn-sharp:hover {
     transform: translate(-1px, -1px);
-    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.85);
+    box-shadow: 3px 3px 0px 0px rgba(18, 17, 16, 0.9);
   }
   .btn-sharp:active {
     transform: translate(1px, 1px);
-    box-shadow: 1px 1px 0px 0px rgba(0, 0, 0, 0.85);
+    box-shadow: 1px 1px 0px 0px rgba(18, 17, 16, 0.9);
   }
 
-  /* Sharp subtle input */
-  .input-sharp {
-    border-radius: 0px;
-    border: 1px solid var(--color-border);
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.05);
+  .text-primary {
+    color: var(--color-text-primary);
+  }
+  .text-secondary {
+    color: var(--color-text-secondary);
+  }
+  .text-muted {
+    color: var(--color-text-muted);
+  }
+  .text-accent {
+    color: var(--color-accent);
+  }
+  .text-positive {
+    color: var(--color-positive);
+  }
+  .text-negative {
+    color: var(--color-negative);
   }
 
-  .text-primary   { color: var(--color-text-primary); }
-  .text-secondary { color: var(--color-text-secondary); }
-  .text-muted     { color: var(--color-text-muted); }
-  .text-accent    { color: var(--color-accent); }
-  .text-positive  { color: var(--color-positive); }
-  .text-negative  { color: var(--color-negative); }
+  .bg-surface {
+    background-color: var(--color-surface);
+  }
+  .bg-surface-raised {
+    background-color: var(--color-surface-raised);
+  }
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
 
-  .bg-surface        { background-color: var(--color-surface); }
-  .bg-surface-raised { background-color: var(--color-surface-raised); }
-  .bg-accent         { background-color: var(--color-accent); }
-
-  .border-subtle  { border-color: var(--color-border-subtle); }
-  .border-default { border-color: var(--color-border); }
+  .border-subtle {
+    border-color: var(--color-border-subtle);
+  }
+  .border-default {
+    border-color: var(--color-border);
+  }
 }
