@@ -6,7 +6,7 @@ import { StatsGrid, StatsGridSkeleton } from "@/components/dashboard/stats-grid"
 import { RevenueChart, RevenueChartSkeleton } from "@/components/dashboard/revenue-chart";
 import { TrafficChart, TrafficChartSkeleton } from "@/components/dashboard/traffic-chart";
 import { ActivityTable, ActivityTableSkeleton } from "@/components/dashboard/activity-table";
-import { AlertCircle, RefreshCw } from "lucide-react";
+import { AlertCircle, RefreshCw, Download, Calendar } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Dashboard — Nexus",
@@ -21,24 +21,24 @@ export const dynamic = "force-dynamic";
 function DashboardError() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[50vh] text-center gap-4">
-      <div className="rounded-full bg-red-400/10 p-4">
-        <AlertCircle className="h-6 w-6 text-red-400" aria-hidden />
+      <div className="bg-red-50 border border-[var(--color-accent)] p-4 shadow-[2px_2px_0px_var(--color-accent)]">
+        <AlertCircle className="h-6 w-6 text-[var(--color-accent)]" aria-hidden />
       </div>
       <div>
-        <p className="font-semibold text-[var(--color-text-primary)] mb-1">
+        <p className="font-bold text-lg text-[var(--color-text-primary)] mb-1 uppercase tracking-tight">
           Unable to load dashboard data
         </p>
-        <p className="text-sm text-[var(--color-text-muted)] max-w-sm">
-          Something went wrong while loading your dashboard. Please try again.
+        <p className="text-sm text-[var(--color-text-muted)] max-w-sm font-medium">
+          Something went wrong while retrieving live operational metrics. Please retry.
         </p>
       </div>
       <form action="">
         <button
           type="submit"
-          className="inline-flex items-center gap-2 rounded-md bg-[var(--color-accent)] px-4 py-2 text-sm font-medium text-white hover:bg-[var(--color-accent-hover)] transition-colors"
+          className="btn-sharp inline-flex items-center gap-2 bg-[var(--color-accent)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-white border border-[var(--color-accent-hover)] transition-all"
         >
           <RefreshCw className="h-3.5 w-3.5" aria-hidden />
-          Retry
+          Retry Connection
         </button>
       </form>
     </div>
@@ -50,18 +50,39 @@ function DashboardError() {
 function DashboardHeader() {
   const now = new Date();
   const formattedDate = now.toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
+    weekday: "short",
+    month: "short",
     day: "numeric",
     year: "numeric",
   });
 
   return (
-    <div className="mb-6">
-      <h1 className="text-xl font-semibold tracking-tight text-[var(--color-text-primary)]">
-        Overview
-      </h1>
-      <p className="mt-0.5 text-sm text-[var(--color-text-muted)]">{formattedDate}</p>
+    <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[var(--color-border)]">
+      <div>
+        <div className="flex items-center gap-2.5">
+          <span className="h-2.5 w-2.5 bg-[var(--color-accent)] shadow-[1px_1px_0px_#000]" />
+          <h1 className="text-xl font-black tracking-tight text-[var(--color-text-primary)] uppercase">
+            Executive Overview
+          </h1>
+        </div>
+        <p className="mt-1 text-xs font-semibold text-[var(--color-text-muted)] uppercase tracking-wider">
+          Real-time performance analytics & transactional telemetry
+        </p>
+      </div>
+
+      <div className="flex items-center gap-2 self-start sm:self-auto">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-[var(--color-border)] bg-[var(--color-surface)] text-xs font-bold text-[var(--color-text-secondary)] shadow-[1px_1px_0px_rgba(0,0,0,0.08)]">
+          <Calendar className="h-3.5 w-3.5 text-[var(--color-accent)]" />
+          <span>{formattedDate}</span>
+        </div>
+        <button
+          type="button"
+          className="btn-sharp inline-flex items-center gap-1.5 px-3 py-1.5 bg-[var(--color-accent)] text-white text-xs font-bold uppercase tracking-wider border border-[var(--color-accent-hover)]"
+        >
+          <Download className="h-3.5 w-3.5" />
+          <span>Export</span>
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   AreaChart,
   Area,
@@ -25,7 +25,7 @@ interface RevenueChartProps {
   initialPeriod?: Period;
 }
 
-// Custom tooltip for the chart
+// Custom tooltip with sharp architectural border and hard shadow
 function CustomTooltip({
   active,
   payload,
@@ -38,13 +38,13 @@ function CustomTooltip({
   if (!active || !payload?.length) return null;
 
   return (
-    <div className="rounded-lg border border-[var(--color-border)] bg-[var(--color-surface-raised)] p-3 shadow-lg text-xs">
-      <p className="mb-2 font-medium text-[var(--color-text-secondary)]">{label}</p>
-      <p className="text-[var(--color-text-primary)] font-semibold">
+    <div className="border border-[var(--color-text-primary)] bg-[var(--color-surface)] p-3 shadow-[3px_3px_0px_#0a0a0a] text-xs">
+      <p className="mb-1 font-bold text-[var(--color-text-secondary)] uppercase tracking-wide text-[10px]">{label}</p>
+      <p className="text-[var(--color-accent)] font-extrabold text-sm tabular-nums">
         {formatCurrency(payload[0].value)}
       </p>
       {payload[1] && (
-        <p className="text-[var(--color-text-muted)] mt-0.5">
+        <p className="text-[var(--color-text-muted)] mt-1 font-medium">
           {payload[1].value} orders
         </p>
       )}
@@ -75,7 +75,6 @@ export function RevenueChart({ initialData, initialPeriod = "30d" }: RevenueChar
     fetchRevenue(p);
   };
 
-  // Ticks: show every nth label to avoid crowding
   const tickInterval = data.length > 60 ? Math.floor(data.length / 12) - 1 : data.length > 20 ? 4 : 0;
 
   return (
@@ -83,9 +82,12 @@ export function RevenueChart({ initialData, initialPeriod = "30d" }: RevenueChar
       {/* Header */}
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="font-semibold text-[var(--color-text-primary)]">Revenue</h2>
-          <p className="text-xs text-[var(--color-text-muted)] mt-0.5">
-            Total revenue over the selected period
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 bg-[var(--color-accent)] inline-block shadow-[1px_1px_0px_#000]" />
+            <h2 className="font-bold text-base text-[var(--color-text-primary)] uppercase tracking-tight">Revenue Overview</h2>
+          </div>
+          <p className="text-xs text-[var(--color-text-muted)] mt-1 font-medium">
+            Financial gross revenue trajectory over selected timeline
           </p>
         </div>
 
@@ -93,63 +95,66 @@ export function RevenueChart({ initialData, initialPeriod = "30d" }: RevenueChar
         <div
           role="group"
           aria-label="Select time period"
-          className="flex items-center gap-1 rounded-lg border border-[var(--color-border-subtle)] p-1"
+          className="flex items-center gap-1.5"
         >
-          {PERIODS.map(({ label, value }) => (
-            <button
-              key={value}
-              onClick={() => handlePeriodChange(value)}
-              className={`rounded-md px-3 py-1 text-xs font-medium transition-colors ${
-                period === value
-                  ? "bg-[var(--color-accent)] text-white"
-                  : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-surface-raised)]"
-              }`}
-              aria-pressed={period === value}
-            >
-              {label}
-            </button>
-          ))}
+          {PERIODS.map(({ label, value }) => {
+            const isSelected = period === value;
+            return (
+              <button
+                key={value}
+                onClick={() => handlePeriodChange(value)}
+                className={`px-3 py-1 text-xs font-bold transition-all ${
+                  isSelected
+                    ? "bg-[var(--color-accent)] text-white border border-[var(--color-accent-hover)] shadow-[2px_2px_0px_#0a0a0a] translate-x-[-1px] translate-y-[-1px]"
+                    : "bg-[var(--color-surface)] text-[var(--color-text-secondary)] border border-[var(--color-border)] hover:bg-[var(--color-surface-raised)] hover:text-black shadow-[1px_1px_0px_rgba(0,0,0,0.06)]"
+                }`}
+                aria-pressed={isSelected}
+              >
+                {label}
+              </button>
+            );
+          })}
         </div>
       </div>
 
       {/* Chart */}
-      <div className={`h-56 transition-opacity duration-200 ${loading ? "opacity-40 pointer-events-none" : "opacity-100"}`}>
+      <div className={`h-60 transition-opacity duration-200 ${loading ? "opacity-40 pointer-events-none" : "opacity-100"}`}>
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: 0 }}>
+          <AreaChart data={data} margin={{ top: 8, right: 4, bottom: 0, left: 0 }}>
             <defs>
               <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#6366f1" stopOpacity={0.2} />
-                <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                <stop offset="5%" stopColor="#9b1c1c" stopOpacity={0.22} />
+                <stop offset="95%" stopColor="#9b1c1c" stopOpacity={0.0} />
               </linearGradient>
             </defs>
             <CartesianGrid
-              strokeDasharray="3 3"
-              stroke="var(--color-border-subtle)"
+              strokeDasharray="2 2"
+              stroke="var(--color-border)"
               vertical={false}
             />
             <XAxis
               dataKey="date"
-              tick={{ fontSize: 11, fill: "var(--color-text-muted)" }}
+              tick={{ fontSize: 11, fill: "var(--color-text-muted)", fontWeight: 600 }}
               tickLine={false}
-              axisLine={false}
+              axisLine={{ stroke: "var(--color-border)" }}
               interval={tickInterval}
             />
             <YAxis
-              tick={{ fontSize: 11, fill: "var(--color-text-muted)" }}
+              tick={{ fontSize: 11, fill: "var(--color-text-muted)", fontWeight: 600 }}
               tickLine={false}
-              axisLine={false}
+              axisLine={{ stroke: "var(--color-border)" }}
               tickFormatter={(v) => `$${v >= 1000 ? `${(v / 1000).toFixed(0)}k` : v}`}
-              width={44}
+              width={48}
             />
-            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "var(--color-border)", strokeWidth: 1 }} />
+            <Tooltip content={<CustomTooltip />} cursor={{ stroke: "var(--color-accent)", strokeWidth: 1.5, strokeDasharray: "2 2" }} />
             <Area
               type="monotone"
               dataKey="revenue"
-              stroke="#6366f1"
-              strokeWidth={2}
+              stroke="#9b1c1c"
+              strokeWidth={2.5}
               fill="url(#revenueGradient)"
               dot={false}
-              activeDot={{ r: 4, fill: "#6366f1", strokeWidth: 0 }}
+              activeDot={{ r: 5, fill: "#9b1c1c", stroke: "#ffffff", strokeWidth: 2 }}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -163,12 +168,12 @@ export function RevenueChartSkeleton() {
     <div className="card p-5 animate-pulse">
       <div className="mb-5 flex items-center justify-between">
         <div className="space-y-1.5">
-          <div className="h-4 w-20 rounded bg-[var(--color-surface-raised)]" />
-          <div className="h-3 w-40 rounded bg-[var(--color-surface-raised)]" />
+          <div className="h-4 w-24 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)]" />
+          <div className="h-3 w-40 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)]" />
         </div>
-        <div className="h-8 w-36 rounded-lg bg-[var(--color-surface-raised)]" />
+        <div className="h-8 w-36 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)]" />
       </div>
-      <div className="h-56 rounded-lg bg-[var(--color-surface-raised)]" />
+      <div className="h-60 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)]" />
     </div>
   );
 }

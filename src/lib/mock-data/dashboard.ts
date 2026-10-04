@@ -125,11 +125,11 @@ export const MOCK_DASHBOARD_DATA: DashboardData = {
   },
   revenue: REVENUE_BY_PERIOD["30d"], // default period
   traffic: [
-    { source: "Organic Search", value: 38, color: "#6366f1" },
-    { source: "Direct", value: 24, color: "#8b5cf6" },
-    { source: "Referral", value: 18, color: "#a78bfa" },
-    { source: "Social", value: 13, color: "#c4b5fd" },
-    { source: "Email", value: 7, color: "#ddd6fe" },
+    { source: "Organic Search", value: 38, color: "#9b1c1c" },
+    { source: "Direct",         value: 24, color: "#c2410c" },
+    { source: "Referral",       value: 18, color: "#b45309" },
+    { source: "Social",         value: 13, color: "#d4a373" },
+    { source: "Email",          value: 7,  color: "#292524" },
   ],
   activity: ACTIVITY,
 };

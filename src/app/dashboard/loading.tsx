@@ -7,9 +7,9 @@ import { ActivityTableSkeleton } from "@/components/dashboard/activity-table";
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <div className="mb-6">
-        <div className="h-6 w-20 rounded-md bg-[var(--color-surface-raised)] animate-pulse" />
-        <div className="mt-1.5 h-4 w-48 rounded bg-[var(--color-surface-raised)] animate-pulse" />
+      <div className="mb-6 pb-4 border-b border-[var(--color-border)]">
+        <div className="h-6 w-32 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] animate-pulse" />
+        <div className="mt-2 h-4 w-56 bg-[var(--color-surface-raised)] border border-[var(--color-border-subtle)] animate-pulse" />
       </div>
       <div className="flex flex-col gap-5">
         <StatsGridSkeleton />
