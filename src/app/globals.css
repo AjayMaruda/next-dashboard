@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #020617;    /* slate-950 */
+  --color-surface: #0f172a;       /* slate-900 */
+  --color-surface-raised: #1e293b; /* slate-800 */
+  --color-border: #334155;        /* slate-700 */
+  --color-border-subtle: #1e293b; /* slate-800 */
+  --color-text-primary: #f1f5f9;  /* slate-100 */
+  --color-text-secondary: #94a3b8; /* slate-400 */
+  --color-text-muted: #475569;    /* slate-600 */
+  --color-accent: #6366f1;        /* indigo-500 */
+  --color-accent-hover: #4f46e5;  /* indigo-600 */
+  --color-positive: #10b981;      /* emerald-500 */
+  --color-negative: #f87171;      /* red-400 */
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+}
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-surface);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-muted);
+  }
+
+  /* Focus ring */
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+@layer utilities {
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--radius-lg);
+  }
+
+  .card-hover {
+    transition: border-color 150ms ease, background-color 150ms ease;
+  }
+  .card-hover:hover {
+    border-color: var(--color-border);
+    background-color: var(--color-surface-raised);
+  }
+
+  .text-primary { color: var(--color-text-primary); }
+  .text-secondary { color: var(--color-text-secondary); }
+  .text-muted { color: var(--color-text-muted); }
+  .text-accent { color: var(--color-accent); }
+  .text-positive { color: var(--color-positive); }
+  .text-negative { color: var(--color-negative); }
+
+  .bg-surface { background-color: var(--color-surface); }
+  .bg-surface-raised { background-color: var(--color-surface-raised); }
+  .bg-accent { background-color: var(--color-accent); }
+
+  .border-subtle { border-color: var(--color-border-subtle); }
+  .border-default { border-color: var(--color-border); }
+}
